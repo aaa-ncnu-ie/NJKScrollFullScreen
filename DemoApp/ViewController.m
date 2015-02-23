@@ -42,7 +42,7 @@
     [self.refreshControl addTarget:self action:@selector(refreshControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 
     _scrollProxy = [[NJKScrollFullScreen alloc] initWithForwardTarget:self viewController:self]; // UIScrollViewDelegate and UITableViewDelegate methods proxy to ViewController
-
+    _scrollProxy.downThresholdY = 0;
     self.tableView.delegate = (id)_scrollProxy; // cast for surpress incompatible warnings
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetBars) name:UIApplicationWillEnterForegroundNotification object:nil]; // resume bars when back to forground from other apps
