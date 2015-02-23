@@ -7,6 +7,6 @@
 #import <UIKit/UIKit.h>
 #import "NJKScrollFullScreen.h"
 
-@interface WebViewController : UIViewController<NJKScrollFullscreenDelegate>
+@interface WebViewController : UIViewController
 
 @end

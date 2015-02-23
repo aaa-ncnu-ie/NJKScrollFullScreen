@@ -6,6 +6,6 @@
 
 #import <UIKit/UIKit.h>
 #import "NJKScrollFullScreen.h"
-@interface ViewController : UITableViewController<NJKScrollFullscreenDelegate>
+@interface ViewController : UITableViewController
 
 @end

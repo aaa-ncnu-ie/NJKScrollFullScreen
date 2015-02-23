@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="pH6-8N-gIx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="pH6-8N-gIx">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--View Controller - UITableView-->
+        <!--UITableView-->
         <scene sceneID="63I-uJ-wW2">
             <objects>
                 <tableViewController wantsFullScreenLayout="YES" id="pbU-ei-riF" customClass="ViewController" sceneMemberID="viewController">
@@ -35,7 +35,7 @@
             </objects>
             <point key="canvasLocation" x="565" y="118"/>
         </scene>
-        <!--Web View Controller - UIWebView-->
+        <!--UIWebView-->
         <scene sceneID="nA6-LD-bgU">
             <objects>
                 <viewController id="0Wp-rO-tdE" customClass="WebViewController" sceneMemberID="viewController">
@@ -49,7 +49,6 @@
                         <subviews>
                             <webView contentMode="scaleToFill" fixedFrame="YES" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mil-6O-FdT">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
                         </subviews>
@@ -67,14 +66,10 @@
         <!--Navigation Controller-->
         <scene sceneID="Cg0-fi-i7E">
             <objects>
-                <navigationController wantsFullScreenLayout="YES" definesPresentationContext="YES" toolbarHidden="NO" id="pH6-8N-gIx" sceneMemberID="viewController">
+                <navigationController wantsFullScreenLayout="YES" definesPresentationContext="YES" id="pH6-8N-gIx" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gOV-IO-IBr">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="OXq-Dq-G8h">
-                        <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </toolbar>
                     <connections>
                         <segue destination="pbU-ei-riF" kind="relationship" relationship="rootViewController" id="NkF-Ef-ain"/>
                     </connections>

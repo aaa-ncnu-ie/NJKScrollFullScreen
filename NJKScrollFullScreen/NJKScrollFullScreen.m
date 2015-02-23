@@ -5,6 +5,7 @@
 //
 
 #import "NJKScrollFullScreen.h"
+#import "UIViewController+NJKFullScreenSupport.h"
 
 typedef NS_ENUM(NSInteger, NJKScrollDirection) {
     NJKScrollDirectionNone,
@@ -24,11 +25,12 @@ NJKScrollDirection detectScrollDirection(currentOffsetY, previousOffsetY)
 @property (nonatomic) CGFloat previousOffsetY;
 @property (nonatomic) CGFloat accumulatedY;
 @property (nonatomic, weak) id<UIScrollViewDelegate> forwardTarget;
+@property (weak, nonatomic) UIViewController *viewController;
 @end
 
 @implementation NJKScrollFullScreen
 
-- (id)initWithForwardTarget:(id)forwardTarget
+- (id)initWithForwardTarget:(id)forwardTarget viewController:(UIViewController *)viewController
 {
     self = [super init];
     if (self) {
@@ -36,6 +38,7 @@ NJKScrollDirection detectScrollDirection(currentOffsetY, previousOffsetY)
         _downThresholdY = 200.0;
         _upThresholdY = 0.0;
         _forwardTarget = forwardTarget;
+        _viewController = viewController;
     }
     return self;
 }
@@ -76,9 +79,7 @@ NJKScrollDirection detectScrollDirection(currentOffsetY, previousOffsetY)
             BOOL isOverThreshold = _accumulatedY < -_upThresholdY;
 
             if (isOverThreshold || isOverBottomBoundary)  {
-                if ([_delegate respondsToSelector:@selector(scrollFullScreen:scrollViewDidScrollUp:)]) {
-                    [_delegate scrollFullScreen:self scrollViewDidScrollUp:deltaY];
-                }
+                [_viewController moveNavigationBar:deltaY animated:YES];
             }
         }
             break;
@@ -87,9 +88,7 @@ NJKScrollDirection detectScrollDirection(currentOffsetY, previousOffsetY)
             BOOL isOverThreshold = _accumulatedY > _downThresholdY;
 
             if (isOverThreshold || isOverTopBoundary) {
-                if ([_delegate respondsToSelector:@selector(scrollFullScreen:scrollViewDidScrollDown:)]) {
-                    [_delegate scrollFullScreen:self scrollViewDidScrollDown:deltaY];
-                }
+                [_viewController moveNavigationBar:deltaY animated:YES];
             }
         }
             break;
@@ -124,9 +123,7 @@ NJKScrollDirection detectScrollDirection(currentOffsetY, previousOffsetY)
             BOOL isOverBottomBoundary = currentOffsetY >= bottomBoundary;
 
             if (isOverThreshold || isOverBottomBoundary) {
-                if ([_delegate respondsToSelector:@selector(scrollFullScreenScrollViewDidEndDraggingScrollUp:)]) {
-                    [_delegate scrollFullScreenScrollViewDidEndDraggingScrollUp:self];
-                }
+                [_viewController hideNavigationBar:YES];
             }
             break;
         }
@@ -136,9 +133,7 @@ NJKScrollDirection detectScrollDirection(currentOffsetY, previousOffsetY)
             BOOL isOverTopBoundary = currentOffsetY <= topBoundary;
 
             if (isOverThreshold || isOverTopBoundary) {
-                if ([_delegate respondsToSelector:@selector(scrollFullScreenScrollViewDidEndDraggingScrollDown:)]) {
-                    [_delegate scrollFullScreenScrollViewDidEndDraggingScrollDown:self];
-                }
+                [_viewController showNavigationBar:YES];
             }
             break;
         }
@@ -153,9 +148,7 @@ NJKScrollDirection detectScrollDirection(currentOffsetY, previousOffsetY)
     if ([_forwardTarget respondsToSelector:@selector(scrollViewShouldScrollToTop:)]) {
         ret = [_forwardTarget scrollViewShouldScrollToTop:scrollView];
     }
-    if ([_delegate respondsToSelector:@selector(scrollFullScreenScrollViewDidEndDraggingScrollDown:)]) {
-        [_delegate scrollFullScreenScrollViewDidEndDraggingScrollDown:self];
-    }
+    [_viewController showNavigationBar:YES];
     return ret;
 }
 

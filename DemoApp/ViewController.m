@@ -41,19 +41,11 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refreshControlValueChanged:) forControlEvents:UIControlEventValueChanged];
 
-    _scrollProxy = [[NJKScrollFullScreen alloc] initWithForwardTarget:self]; // UIScrollViewDelegate and UITableViewDelegate methods proxy to ViewController
+    _scrollProxy = [[NJKScrollFullScreen alloc] initWithForwardTarget:self viewController:self]; // UIScrollViewDelegate and UITableViewDelegate methods proxy to ViewController
 
     self.tableView.delegate = (id)_scrollProxy; // cast for surpress incompatible warnings
 
-    _scrollProxy.delegate = self;
-
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetBars) name:UIApplicationWillEnterForegroundNotification object:nil]; // resume bars when back to forground from other apps
-
-    if (!IS_RUNNING_IOS7) {
-        // support full screen on iOS 6
-        self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
-        self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;
-    }
 }
 
 -(void)viewDidLayoutSubviews
@@ -72,7 +64,6 @@
     [super viewWillDisappear:animated];
     [_scrollProxy reset];
     [self showNavigationBar:animated];
-    [self showToolbar:animated];
 }
 
 - (void)setupData
@@ -99,7 +90,6 @@
 {
     [_scrollProxy reset];
     [self showNavigationBar:NO];
-    [self showToolbar:NO];
 }
 
 #pragma mark -
@@ -116,40 +106,6 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:Identifier forIndexPath:indexPath];
     cell.textLabel.text = [_data[indexPath.row] stringValue];
     return cell;
-}
-
-#pragma mark -
-#pragma mark NJKScrollFullScreenDelegate
-
-- (void)scrollFullScreen:(NJKScrollFullScreen *)proxy scrollViewDidScrollUp:(CGFloat)deltaY
-{
-    [self moveNavigationBar:deltaY animated:YES];
-    [self moveToolbar:-deltaY animated:YES]; // move to revese direction
-}
-
-- (void)scrollFullScreen:(NJKScrollFullScreen *)proxy scrollViewDidScrollDown:(CGFloat)deltaY
-{
-    [self moveNavigationBar:deltaY animated:YES];
-    [self moveToolbar:-deltaY animated:YES];
-}
-
-- (void)scrollFullScreenScrollViewDidEndDraggingScrollUp:(NJKScrollFullScreen *)proxy
-{
-    [self hideNavigationBar:YES];
-    [self hideToolbar:YES];
-}
-
-- (void)scrollFullScreenScrollViewDidEndDraggingScrollDown:(NJKScrollFullScreen *)proxy
-{
-    [self showNavigationBar:YES];
-    [self showToolbar:YES];
-}
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-    [_scrollProxy reset];
-    [self showNavigationBar:YES];
-    [self showToolbar:YES];
 }
 
 @end
