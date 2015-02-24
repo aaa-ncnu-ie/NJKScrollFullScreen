@@ -39,7 +39,7 @@ NJKScrollDirection detectScrollDirection(currentOffsetY, previousOffsetY)
     self = [super init];
     if (self) {
         [self reset];
-        _downThresholdY = 200.0;
+        _downThresholdY = 0.0;
         _upThresholdY = 0.0;
         _forwardTarget = forwardTarget;
         _viewController = viewController;
