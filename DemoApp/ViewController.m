@@ -38,9 +38,6 @@
 
     [self setupData];
 
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(refreshControlValueChanged:) forControlEvents:UIControlEventValueChanged];
-
     _scrollProxy = [[NJKScrollFullScreen alloc] initWithForwardTarget:self viewController:self]; // UIScrollViewDelegate and UITableViewDelegate methods proxy to ViewController
     _scrollProxy.downThresholdY = 0;
     self.tableView.delegate = (id)_scrollProxy; // cast for surpress incompatible warnings
@@ -69,7 +66,7 @@
 - (void)setupData
 {
     NSMutableArray *data = [@[] mutableCopy];
-    for (NSUInteger i = 0; i < 100; i++) {
+    for (NSUInteger i = 0; i < 5; i++) {
         [data addObject:@(i)];
     }
     _data = [data copy];
