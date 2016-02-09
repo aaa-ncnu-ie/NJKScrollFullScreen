@@ -69,11 +69,11 @@ NJKScrollDirection detectScrollDirection(currentOffsetY, previousOffsetY)
     BOOL isOverTopBoundary = currentOffsetY <= topBoundary;
     BOOL isOverBottomBoundary = currentOffsetY >= bottomBoundary;
 
-    BOOL isBouncing = (isOverTopBoundary && currentScrollDirection != NJKScrollDirectionDown) || (isOverBottomBoundary && currentScrollDirection != NJKScrollDirectionUp);
+    // BOOL isBouncing = (isOverTopBoundary && currentScrollDirection != NJKScrollDirectionDown) || (isOverBottomBoundary && currentScrollDirection != NJKScrollDirectionUp);
 
-    if (isBouncing || !scrollView.isDragging) {
-        return;
-    }
+    // if (isBouncing || !scrollView.isDragging) {
+    //     return;
+    // }
 
     CGFloat deltaY = _previousOffsetY - currentOffsetY;
     _accumulatedY += deltaY;
